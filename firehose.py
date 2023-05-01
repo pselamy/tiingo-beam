@@ -12,7 +12,6 @@ from apache_beam.transforms import periodicsequence
 from apache_beam.utils import timestamp
 from apache_beam.transforms import window
 from google.protobuf import json_format
-
 from websocket import create_connection
 
 
