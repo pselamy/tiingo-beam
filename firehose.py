@@ -3,12 +3,11 @@ import datetime
 import dateutil.parser
 import json
 import os
-from typing import Callable, Iterable, Optional
+from typing import Callable
 
 import apache_beam as beam
 from apache_beam.io import restriction_trackers
 from apache_beam.transforms import core
-from apache_beam.transforms import periodicsequence
 from apache_beam.utils import timestamp
 from apache_beam.transforms import window
 from google.protobuf import json_format
