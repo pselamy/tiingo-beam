@@ -3,9 +3,9 @@ from datetime import datetime
 from typing import Text
 import unittest
 
-import pytz
 from hypothesis import given
 from hypothesis import strategies as st
+import pytz
 
 from tiingo_beam import models
 from tiingo_beam import parsers
