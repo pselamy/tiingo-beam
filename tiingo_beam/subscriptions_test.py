@@ -2,7 +2,6 @@ import json
 import unittest
 from typing import Text
 
-import hypothesis
 from hypothesis import given
 from hypothesis import strategies as st
 
