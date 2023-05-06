@@ -22,11 +22,10 @@ class CryptoTradeParser(TradeParser):
             if data[0] != "T" or len(data) != 6 or not data[1]:
                 return
 
-            symbol = data[1].upper()
             return models.Trade(
                 exchange_name=data[3],
                 instrument=models.Instrument(
-                    symbol=symbol,
+                    symbol=data[1].upper(),
                     type=models.InstrumentType.CRYPTO,
                 ),
                 volume=float(data[4]),
