@@ -37,6 +37,7 @@ py_test(
     srcs = ["parsers_test.py"],
     deps = [
         requirement("hypothesis"),
+        requirement("pytz"),
         ":parsers",
     ],
 )
