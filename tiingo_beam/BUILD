@@ -4,6 +4,7 @@ py_library(
     name = "endpoints",
     srcs = ["endpoints.py"],
     deps = [
+        requirement("websocket-client"),
         ":models",
         ":parsers",
         ":subscriptions",
