@@ -1,6 +1,24 @@
 load("@pip_deps//:requirements.bzl", "requirement")
 
 py_library(
+    name = "endpoints",
+    srcs = ["endpoints.py"],
+    deps = [
+        ":models",
+        ":parsers",
+        ":subscriptions",
+    ],
+)
+
+py_test(
+    name = "endpoints_test",
+    srcs = ["endpoints_test.py"],
+    deps = [
+        ":endpoints",
+    ],
+)
+
+py_library(
     name = "models",
     srcs = ["models.py"],
 )
@@ -19,7 +37,6 @@ py_test(
     srcs = ["parsers_test.py"],
     deps = [
         requirement("hypothesis"),
-        requirement("pytz"),
         ":parsers",
     ],
 )
