@@ -1,9 +1,9 @@
 import datetime
 import unittest
 
-from tiingo_beam import parsers, subscriptions
-from tiingo_beam import endpoints
-from tiingo_beam import models
+from tiingobeam import parsers, subscriptions
+from tiingobeam import endpoints
+from tiingobeam import models
 
 
 FAKE_SUBSCRIPTION = "test-subscription"
