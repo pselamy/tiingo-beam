@@ -7,8 +7,8 @@ import unittest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from tiingobeam import models
-from tiingobeam import parsers
+from tiingo_beam import models
+from tiingo_beam import parsers
 
 
 class TestCryptoTradeParser(unittest.TestCase):

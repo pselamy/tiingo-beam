@@ -3,8 +3,8 @@ import os
 import apache_beam as beam
 from apache_beam.options import pipeline_options
 
-from tiingobeam import endpoints
-from tiingobeam import firehose
+from tiingo_beam import endpoints
+from tiingo_beam import firehose
 
 if __name__ == "__main__":
     with beam.Pipeline(options=pipeline_options.StandardOptions()) as pipeline:
