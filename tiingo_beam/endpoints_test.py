@@ -35,7 +35,7 @@ class TestEndpoint(unittest.TestCase):
         endpoint_config = endpoints.EndpointConfig(
             "wss://api.tiingo.com/crypto",
             subscription_factory=subscriptions.CryptoSubscriptionFactory(),
-            trade_parser=parsers.CryptoTradeParser(),
+            parser=parsers.CryptoTradeParser(),
         )
 
         # Act
@@ -81,11 +81,11 @@ class TestEndpoint(unittest.TestCase):
     def test_endpoint_crypto_parse(self):
         # Arrange
         fake_parser = FakeCryptoTradeParser()
-        endpoints.Endpoint.CRYPTO.value.trade_parser = fake_parser
+        endpoints.Endpoint.CRYPTO.value.parser = fake_parser
         endpoint = endpoints.Endpoint.CRYPTO
 
         # Act
-        result = endpoint.parse_trade({"message": "test-message"})
+        result = endpoint.parse({"message": "test-message"})
 
         # Assert
         self.assertEqual(result, FAKE_TRADE)
