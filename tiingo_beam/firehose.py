@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+from datetime import timezone
 from typing import Callable, Iterable, Optional, Text
 
 import apache_beam as beam
@@ -9,12 +10,13 @@ from apache_beam.transforms import window
 from apache_beam.utils import timestamp
 
 from tiingo_beam import endpoints
-from tiingo_beam import models
 
 
 @dataclasses.dataclass
 class RestrictionProvider(core.RestrictionProvider):
-    utcnow: Callable[[], datetime.datetime] = datetime.datetime.utcnow
+    utcnow: Callable[[], datetime.datetime] = lambda: datetime.datetime.now(
+        tz=timezone.utc
+    )
 
     def initial_restriction(
         self,
@@ -46,7 +48,9 @@ class RestrictionProvider(core.RestrictionProvider):
 class GetEndpointTrades(beam.DoFn):
     api_key: Text
     threshold_level: int
-    utcnow: Callable[[], datetime.datetime] = datetime.datetime.utcnow
+    utcnow: Callable[[], datetime.datetime] = lambda: datetime.datetime.now(
+        tz=timezone.utc
+    )
 
     def _get_rain_check(
         self, start_time: datetime.datetime
@@ -54,7 +58,6 @@ class GetEndpointTrades(beam.DoFn):
         # noinspection PyTypeChecker
         now: datetime.datetime = self.utcnow()
         seconds_until_start = max(0.0, (start_time - now).total_seconds())
-
         if not seconds_until_start:
             return
 
@@ -67,7 +70,8 @@ class GetEndpointTrades(beam.DoFn):
         restriction_tracker=beam.DoFn.RestrictionParam(RestrictionProvider()),
     ) -> Iterable[window.TimestampedValue]:
         start_time = datetime.datetime.fromtimestamp(
-            restriction_tracker.current_restriction().start
+            restriction_tracker.current_restriction().start,
+            tz=timezone.utc,
         )
         rain_check = self._get_rain_check(start_time)
         if rain_check:
@@ -78,7 +82,7 @@ class GetEndpointTrades(beam.DoFn):
         trades = endpoint.trades(
             api_key=self.api_key, threshold_level=self.threshold_level
         )
-        for trade in filter(lambda t: t.time < start_time, trades):
+        for trade in filter(lambda t: t.time >= start_time, trades):
             trade_time = int(trade.time.timestamp())
             if trade_time > last_trade_time and not restriction_tracker.try_claim(
                 trade_time
@@ -97,9 +101,9 @@ class GetTrades(beam.PTransform):
     utcnow: Callable[[], datetime.datetime] = datetime.datetime.utcnow
 
     # noinspection PyMethodOverriding
-    def process(self, p_begin) -> [models.Trade]:
+    def expand(self, p_begin) -> beam.PCollection[window.TimestampedValue]:
         return (
             p_begin
             | core.Create(self.endpoints)
-            | GetEndpointTrades(self.api_key, self.threshold_level)
+            | beam.ParDo(GetEndpointTrades(self.api_key, self.threshold_level))
         )

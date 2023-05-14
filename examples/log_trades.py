@@ -1,16 +1,16 @@
 import os
 
 import apache_beam as beam
-
+from apache_beam.options import pipeline_options
 
 from tiingo_beam import endpoints
-from tiingo_beam import trading
+from tiingo_beam import firehose
 
 if __name__ == "__main__":
-    with beam.Pipeline() as pipeline:
+    with beam.Pipeline(options=pipeline_options.StandardOptions()) as pipeline:
         (
             pipeline
-            | trading.GetTrades(
+            | firehose.GetTrades(
                 api_key=os.environ["TIINGO_API_KEY"],
                 endpoints=(endpoints.Endpoint.CRYPTO,),
                 # A "thresholdLevel" of 2 means you will get Top-of-Book AND Last Trade updates.
@@ -19,5 +19,3 @@ if __name__ == "__main__":
             )
             | "Print" >> beam.Map(print)
         )
-
-    pipeline.run()

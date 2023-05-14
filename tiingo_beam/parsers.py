@@ -19,7 +19,7 @@ class CryptoTradeParser(TradeParser):
             # Pull records from an external service.
             record = json.loads(message)
             data = record.get("data", [])
-            if data[0] != "T" or len(data) != 6 or not data[1]:
+            if len(data) != 6 or data[0] != "T" or not data[1]:
                 return
 
             return models.Trade(
