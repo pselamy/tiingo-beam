@@ -3,7 +3,9 @@ load("@pip_deps//:requirements.bzl", "requirement")
 py_library(
     name = "endpoints",
     srcs = ["endpoints.py"],
+    visibility = ["//visibility:public"],
     deps = [
+        requirement("websocket-client"),
         ":models",
         ":parsers",
         ":subscriptions",
@@ -14,6 +16,16 @@ py_test(
     name = "endpoints_test",
     srcs = ["endpoints_test.py"],
     deps = [
+        ":endpoints",
+    ],
+)
+
+py_library(
+    name = "firehose",
+    srcs = ["firehose.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("apache-beam"),
         ":endpoints",
     ],
 )
