@@ -5,7 +5,7 @@ py_binary(
     srcs = ["log_trades.py"],
     deps = [
         requirement("apache-beam"),
-        "//tiingo_beam:endpoints",
-        "//tiingo_beam:firehose",
+        "//tiingobeam:endpoints",
+        "//tiingobeam:firehose",
     ],
 )
