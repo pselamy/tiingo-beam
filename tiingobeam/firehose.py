@@ -9,7 +9,7 @@ from apache_beam.transforms import core
 from apache_beam.transforms import window
 from apache_beam.utils import timestamp
 
-from tiingo_beam import endpoints
+from tiingobeam import endpoints
 
 
 @dataclasses.dataclass

@@ -4,9 +4,9 @@ from typing import Callable, Iterable, Text
 
 import websocket
 
-from tiingo_beam import models
-from tiingo_beam import parsers
-from tiingo_beam import subscriptions
+from tiingobeam import models
+from tiingobeam import parsers
+from tiingobeam import subscriptions
 
 
 @dataclasses.dataclass(frozen=True)
