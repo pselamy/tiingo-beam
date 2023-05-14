@@ -1,11 +1,11 @@
 import json
 from datetime import datetime
+from datetime import timezone
 from typing import Text
 import unittest
 
 from hypothesis import given
 from hypothesis import strategies as st
-import pytz
 
 from tiingo_beam import models
 from tiingo_beam import parsers
@@ -59,7 +59,7 @@ class TestCryptoTradeParser(unittest.TestCase):
             ),
             volume=volume,
             price=price,
-            time=datetime(year, month, day, hour, minute, second, tzinfo=pytz.UTC),
+            time=datetime(year, month, day, hour, minute, second, tzinfo=timezone.utc),
         )
 
         # Act
@@ -92,7 +92,7 @@ class TestCryptoTradeParser(unittest.TestCase):
             ),
             volume=10.5,
             price=50000.0,
-            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=pytz.UTC),
+            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=timezone.utc),
         )
 
         # Act
@@ -121,7 +121,7 @@ class TestCryptoTradeParser(unittest.TestCase):
             ),
             volume=0,
             price=50000.0,
-            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=pytz.UTC),
+            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=timezone.utc),
         )
 
         # Act
@@ -150,7 +150,7 @@ class TestCryptoTradeParser(unittest.TestCase):
             ),
             volume=10.5,
             price=0,
-            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=pytz.UTC),
+            time=datetime(2022, 4, 1, 12, 0, 0, tzinfo=timezone.utc),
         )
 
         # Act

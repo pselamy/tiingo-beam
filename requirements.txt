@@ -1,5 +1,4 @@
 apache-beam==2.47.0
 hypothesis==6.75.2
 python-dateutil==2.8.2
-pytz==2023.3
 websocket-client==1.5.1
