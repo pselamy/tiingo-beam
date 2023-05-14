@@ -4,7 +4,7 @@ import json
 import logging
 from typing import Optional, Protocol, Text
 
-from tiingobeam import models
+from tiingo_beam import models
 
 
 @dataclasses.dataclass(frozen=True)

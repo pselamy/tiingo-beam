@@ -6,7 +6,7 @@ import hypothesis
 from hypothesis import given
 from hypothesis import strategies as st
 
-from tiingobeam import subscriptions
+from tiingo_beam import subscriptions
 
 
 class CryptoSubscriptionFactoryTestCase(unittest.TestCase):
